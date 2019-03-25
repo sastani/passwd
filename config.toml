@@ -1,10 +1,18 @@
 #Config file for passwd as a service
 #Specify paths for passwd and groups files
+test = true
 port = "8080"
 
 [files]
-    [files.users]
-    path = './files/passwd'
+    [files.deploy]
+        [files.deploy.users]
+        path = '/etc/passwd'
 
-    [files.groups]
-    path = './files/group'
+        [files.deploy.groups]
+        path = '/etc/group'
+    [files.test]
+        [files.test.users]
+        path = './files/passwd'
+
+        [files.test.groups]
+        path = './files/group'

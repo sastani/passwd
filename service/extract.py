@@ -47,7 +47,6 @@ class AllUsers:
 
     def get_user_by_query(self, q):
         self._read_file()
-        #valid_keys = ["name", "uid", "gid", "comment"]
         matching_users = []
         for u in self.users:
             user_found = True
