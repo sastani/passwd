@@ -35,7 +35,7 @@ def get_user_query():
                 q[f] = query.get(f)
     user = users.get_user_by_query(q)
     if not user:
-        abort(404)
+        abort(404, 'No users found for that query')
     return json.dumps(user, sort_keys=False)
 
 @app.route('/users/<int:uid>')
@@ -87,6 +87,8 @@ def get_group_query():
             else:
                 q[f] = query.get(f)
     group_list = groups.get_group_by_query(q)
+    if not group_list:
+        abort(404, 'No groups found for that query')
     return json.dumps(group_list, sort_keys=False)
 
 @app.route('/groups/<int:gid>')
