@@ -68,11 +68,11 @@ hq>][&shell=<sq>]**
 
 Return a list of users matching all of the specified query fields.
 
-**GET /users/<uid>**
+**GET /users/`<uid>`**
 
-Return a single user with <uid>. Return 404 if <uid> is not found.
+Return a single user with `<uid>`. Return 404 if `<uid>` is not found.
 
-**GET /users/<uid>/groups**
+**GET /users/`<uid>`/groups**
 
 Return all the groups for a given user.
 
@@ -87,7 +87,7 @@ Return a list of all groups on the system, a defined by /etc/group.
 
 Return a list of groups matching all of the specified query fields
 
-**GET /groups/<gid>**
+**GET /groups/`<gid>`**
 
-Return a single group with <gid>. Return 404 if <gid> is not found.
+Return a single group with `<gid>`. Return 404 if `<gid>` is not found.
 
