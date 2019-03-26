@@ -68,9 +68,9 @@ hq>][&shell=<sq>]**
 
 Return a list of users matching all of the specified query fields.
 
-**GET /users/`<uid>`**
+**GET /users/&lt;uid&gt;**
 
-Return a single user with `<uid>`. Return 404 if `<uid>` is not found.
+Return a single user with &lt;uid&gt;. Return 404 if `<uid>` is not found.
 
 **GET /users/`<uid>`/groups**
 
