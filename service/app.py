@@ -38,7 +38,7 @@ def get_user_query():
         abort(404)
     return json.dumps(user, sort_keys=False)
 
-@app.route('/users/<int: uid>')
+@app.route('/users/<int:uid>')
 def get_user_by_uid(uid):
     #get user matching some uid
     user = users.get_user_by_uid(uid)
@@ -46,7 +46,7 @@ def get_user_by_uid(uid):
         abort(404, "That uid was not found.")
     return json.dumps(user, sort_keys=False)
 
-@app.route('/users/<int: uid>/groups')
+@app.route('/users/<int:uid>/groups')
 def get_user_groups(uid):
     #get all groups a user is a member of, given a user id
     user = users.get_user_by_uid(uid)
@@ -89,7 +89,7 @@ def get_group_query():
     group_list = groups.get_group_by_query(q)
     return json.dumps(group_list, sort_keys=False)
 
-@app.route('/groups/<int: gid>')
+@app.route('/groups/<int:gid>')
 def get_group_by_gid():
     #get group matching some gid
     group = groups.get_group_by_gid()

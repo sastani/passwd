@@ -1,8 +1,7 @@
 import toml
-#from app import run
+from app import run
 
 def main():
-    '''
     #read config file
     conf_dic = toml.load('config.toml')
     #determine if program set for testing or deployment
@@ -15,9 +14,6 @@ def main():
     users_path = files['group']
     port = conf_dic['port']
     run(passwd_path, users_path, port)
-    '''
-    ex = toml.load('example.toml')
-    print(ex["servers"]["alpha"]["ip"])
 
 
 if __name__ == "__main__":

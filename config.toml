@@ -1,6 +1,6 @@
 #Config file for passwd as a service
 #Specify paths for passwd and groups files
-use_test = false
+use_test = true
 port = "8080"
 
 [files]
@@ -8,7 +8,7 @@ port = "8080"
         passwd = '/etc/passwd'
         group = '/etc/group'
     [files.test]
-        passwd = './files/passwd'
+        passwd = './files/passwd2'
         group =  './files/group'
     [files.unit_test]
         passwd2 = './files/passwd2'

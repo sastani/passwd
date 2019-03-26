@@ -1,5 +1,5 @@
 import os
-
+from exceptions import *
 
 """Logic for parsing passwd file and creating appropriate data structures
 for efficient lookup of users"""
@@ -167,5 +167,3 @@ class ProcessGroups:
             user_group_list.append(g)
         return user_group_list
 
-class FormatError(Exception):
-    pass
