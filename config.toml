@@ -5,14 +5,11 @@ port = "8080"
 
 [files]
     [files.deploy]
-        [files.deploy.users]
-        path = '/etc/passwd'
-
-        [files.deploy.groups]
-        path = '/etc/group'
+        passwd = '/etc/passwd'
+        group = '/etc/group'
     [files.test]
-        [files.test.users]
-        path = './files/passwd'
+        passwd = './files/passwd'
+        group =  './files/group'
+    [files.unit_test]
+        passwd2 = './files/passwd2'
 
-        [files.test.groups]
-        path = './files/group'
