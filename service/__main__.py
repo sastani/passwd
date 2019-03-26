@@ -4,8 +4,8 @@ from app import run
 def main():
     #read config file
     conf_dic = toml.load('config.toml')
-    #determine if program set for testing or development
-    if(conf_dic['test'] == True):
+    #determine if program set for testing or deployment
+    if(conf_dic['use_test'] == True):
         files = conf_dic['files']['test']
     else:
         files = conf_dic['files']['deploy']

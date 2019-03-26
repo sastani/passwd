@@ -15,7 +15,7 @@ Install virtualenv:
 pip install virtualenv 
 ``` 
 
-Create a new virtual environment called 'env':
+Create a new virtual environment called ``env``:
 
 ``` 
 virtualenv env 
@@ -32,4 +32,14 @@ source ./env/bin/activate
 ``` 
 python setup.py install
 ```
+
+## Configure settings 
+The program defaults to the ``passwd`` and ``group`` files on a UNIX system (which are located at ``/etc/passwd`` and ``/etc/groups``).
+If you are not using OSX or Linux, set ``use_test`` in ``config.toml`` to ``false`` and it will use the test files in the ``files`` subdirectory.
+Change the paths in ``[files.test]`` if you would like to use your own files.
+
+
+
+
+
 

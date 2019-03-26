@@ -3,7 +3,7 @@ import os
 
 """Logic for parsing passwd file and creating appropriate data structures
 for efficient lookup of users"""
-class AllUsers:
+class ProcessUsers:
 
     def __init__(self):
         self.passwd_path = None
@@ -73,7 +73,7 @@ class AllUsers:
 
 """Logic for parsing group file and creating appropriate data structures
 for efficient lookup of groups/groups for each user"""
-class AllGroups:
+class ProcessGroups:
 
     def __init__(self):
         self.group_path = None

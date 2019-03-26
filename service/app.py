@@ -1,19 +1,19 @@
 import os
 from flask import Flask, request, abort, json, jsonify
-from extract import AllUsers, AllGroups
+from extract import ProcessUsers, ProcessGroups
 
 app = Flask("passwd")
-users = AllUsers()
-groups = AllGroups()
+users = ProcessUsers()
+groups = ProcessGroups()
 
 '''view functions'''
 
-@app.route('/users', methods=['GET'])
+@app.route('/users')
 def get_users():
     #get list of all users in system
     user_list = users.get_users()
     if not user_list:
-        abort(404)
+        abort(404, "No users found.")
     return json.dumps(user_list, sort_keys=False)
 
 @app.route('/users/query')
@@ -38,30 +38,34 @@ def get_user_query():
         abort(404)
     return json.dumps(user, sort_keys=False)
 
-@app.route('/users/<uid>', methods=['GET'])
+@app.route('/users/<int: uid>')
 def get_user_by_uid(uid):
     #get user matching some uid
-    user = users.get_user_by_uid(int(uid))
+    user = users.get_user_by_uid(uid)
+    if not user:
+        abort(404, "That uid was not found.")
     return json.dumps(user, sort_keys=False)
 
-@app.route('/users/<uid>/groups')
+@app.route('/users/<int: uid>/groups')
 def get_user_groups(uid):
     #get all groups a user is a member of, given a user id
-    user = users.get_user_by_uid(int(uid))
+    user = users.get_user_by_uid(uid)
+    if not user:
+        abort(404, "That uid was not found.")
     user_name = user["name"]
     group_list = groups.get_groups_for_user(user_name)
+
     return json.dumps(group_list, sort_keys=False)
 
-
-@app.route('/groups', methods=['GET'])
+@app.route('/groups')
 def get_groups():
     #get list of all groups in system
     group_list = groups.get_groups()
     if not group_list:
-        abort(404)
+        abort(404, "No groups found.")
     return json.dumps(group_list, sort_keys=False)
 
-@app.route('/groups/query', methods=['GET'])
+@app.route('/groups/query')
 def get_group_query():
     #get group/groups matching a specified query
     query = request.args
@@ -82,8 +86,16 @@ def get_group_query():
                 q["members"] = member_list
             else:
                 q[f] = query.get(f)
+    group_list = groups.get_group_by_query(q)
+    return json.dumps(group_list, sort_keys=False)
 
-
+@app.route('/groups/<int: gid>')
+def get_group_by_gid():
+    #get group matching some gid
+    group = groups.get_group_by_gid()
+    if not group:
+        abort(404, "That gid was not found.")
+    return json.dumps(group, sort_keys=False)
 
 
 '''exceptions and error handlers'''
