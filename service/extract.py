@@ -109,7 +109,7 @@ class ProcessGroups:
                         if len(group_list) == 0:
                             group_list = []
                         else:
-                            group_list = [usr for usr in group_list.split(",")]
+                            group_list = [usr for usr in group_list.split(", ")]
                         g = {"name": name, "gid": gid, "members": group_list}
                         #add group (represented as dictionary) to list of groups
                         self.groups.append(g)
@@ -146,10 +146,11 @@ class ProcessGroups:
             for key in q.keys():
                 if key == "members":
                     query_members = q.get(key)
+                    group_members = g.get(key)
                     for m in query_members:
-                        group_members = g.get(key)
                         if m not in group_members:
                             group_found = False
+                            break
                 elif q.get(key) != g.get(key):
                     group_found = False
                     break
@@ -162,8 +163,8 @@ class ProcessGroups:
         self._read_file()
         user_gids = self.user_to_gids.get(name)
         user_group_list = []
-        for gid in user_gids:
-            g = self.gid_to_group[gid]
-            user_group_list.append(g)
+        if user_gids:
+            for gid in user_gids:
+                g = self.gid_to_group.get(gid)
+                user_group_list.append(g)
         return user_group_list
-
