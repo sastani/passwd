@@ -1,5 +1,5 @@
 import os
-from exceptions import *
+from service.exceptions import *
 
 """Logic for parsing passwd file and creating appropriate data structures
 for efficient lookup of users"""
