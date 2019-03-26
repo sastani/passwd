@@ -7,8 +7,10 @@ users = AllUsers()
 groups = AllGroups()
 
 '''view functions'''
+
 @app.route('/users', methods=['GET'])
 def get_users():
+    #get list of all users in system
     user_list = users.get_users()
     if not user_list:
         abort(404)
@@ -16,6 +18,7 @@ def get_users():
 
 @app.route('/users/query')
 def get_user_query():
+    #get user/users matching a specific query
     query = request.args
     valid_fields = ["name", "uid", "gid", "comment", "home", "shell"]
     fields = list(query.keys())
@@ -37,11 +40,13 @@ def get_user_query():
 
 @app.route('/users/<uid>', methods=['GET'])
 def get_user_by_uid(uid):
+    #get user matching some uid
     user = users.get_user_by_uid(int(uid))
     return json.dumps(user, sort_keys=False)
 
 @app.route('/users/<uid>/groups')
 def get_user_groups(uid):
+    #get all groups a user is a member of, given a user id
     user = users.get_user_by_uid(int(uid))
     user_name = user["name"]
     group_list = groups.get_groups_for_user(user_name)
@@ -50,12 +55,39 @@ def get_user_groups(uid):
 
 @app.route('/groups', methods=['GET'])
 def get_groups():
+    #get list of all groups in system
     group_list = groups.get_groups()
     if not group_list:
         abort(404)
     return json.dumps(group_list, sort_keys=False)
 
+@app.route('/groups/query', methods=['GET'])
+def get_group_query():
+    #get group/groups matching a specified query
+    query = request.args
+    valid_fields = ["name", "gid", "member"]
+    fields = list(query.keys())
+    q = {}
+    member_list = []
+    for f in fields:
+        if f not in valid_fields:
+            raise InvalidUsage('Invalid query. Please check query fields.', status_code=400)
+        else:
+            if f == "gid":
+                q["gid"] = int(query.get("gid"))
+            elif f == "member":
+                members = query.getlist("member")
+                for m in members:
+                    member_list.append(m)
+                q["members"] = member_list
+            else:
+                q[f] = query.get(f)
+
+
+
+
 '''exceptions and error handlers'''
+#custom exception for invalid API calls
 class InvalidUsage(Exception):
     def __init__(self, message, status_code=None, payload=None):
         Exception.__init__(self)
@@ -69,6 +101,7 @@ class InvalidUsage(Exception):
         rv['message'] = self.message
         return rv
 
+#error handler that returns response for InvalidUsage exception
 @app.errorhandler(InvalidUsage)
 def handle_invalid_query(error):
     response = jsonify(error.to_dict())

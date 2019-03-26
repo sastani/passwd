@@ -1,15 +1,21 @@
 import os
 
+
+"""Logic for parsing passwd file and creating appropriate data structures
+for efficient lookup of users"""
 class AllUsers:
+
     def __init__(self):
         self.passwd_path = None
         self.last_modified = None
         self.users = []
         self.uid_to_user = dict()
 
+    #set file path of passwd file
     def set_path(self, p):
         self.passwd_path = p
 
+    #process passwd file
     def _read_file(self):
         #check if file has been modified since last time users were extracted from file
         time_modified = os.path.getmtime(self.passwd_path)
@@ -29,22 +35,28 @@ class AllUsers:
                         comment = fields[4]
                         home = fields[5]
                         shell = fields[6]
+                        #create dictionary representing the user
                         u = {"name": name, "uid": uid, "gid": gid, "comment": comment, "home": home, "shell": shell}
+                        #add user to list of users
                         self.users.append(u)
+                        #create mapping from user id to user
                         self.uid_to_user[uid] = u
             except FileNotFoundError:
                 print("No such file found.")
             except ValueError:
                 print("User id and group id fields are invalid.")
 
+    #returns list of users
     def get_users(self):
         self._read_file()
         return self.users
 
+    #returns user for a given user id
     def get_user_by_uid(self, id):
         self._read_file()
         return self.uid_to_user[id]
 
+    #returns user matching specified query
     def get_user_by_query(self, q):
         self._read_file()
         matching_users = []
@@ -58,6 +70,9 @@ class AllUsers:
                 matching_users.append(u)
         return matching_users
 
+
+"""Logic for parsing group file and creating appropriate data structures
+for efficient lookup of groups/groups for each user"""
 class AllGroups:
 
     def __init__(self):
@@ -67,9 +82,11 @@ class AllGroups:
         self.gid_to_group = dict()
         self.user_to_gids = dict()
 
+    #set file path of group file
     def set_path(self, p):
         self.group_path = p
 
+    #process group file
     def _read_file(self):
         #check if file has been modified since last time groups were extracted from file
         time_modified = os.path.getmtime(self.group_path)
@@ -110,14 +127,17 @@ class AllGroups:
             except ValueError:
                 print("Group id field is invalid.")
 
+    #returns list of groups
     def get_groups(self):
         self._read_file()
         return self.groups
 
+    #returns group for a given group id
     def get_group_by_gid(self, id):
         self._read_file()
         return self.gid_to_group[id]
 
+    #returns group matching the specified query
     def get_group_by_query(self, q):
         self._read_file()
         matching_groups = []
@@ -137,6 +157,7 @@ class AllGroups:
                 matching_groups.append(g)
         return matching_groups
 
+    #returns list of all groups for given user name
     def get_groups_for_user(self, name):
         self._read_file()
         user_gids = self.user_to_gids.get(name)
