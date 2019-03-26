@@ -25,11 +25,11 @@ def get_user_query():
             raise InvalidUsage('Invalid query. Please check query fields.', status_code=400)
         else:
             if f == "uid":
-                q["uid"] = int(query["uid"])
+                q["uid"] = int(query.get("uid"))
             elif f == "gid":
-                q["gid"] = int(query["gid"])
+                q["gid"] = int(query.get("gid"))
             else:
-                q[f] = query[f]
+                q[f] = query.get(f)
     user = users.get_user_by_query(q)
     if not user:
         abort(404)
@@ -39,6 +39,14 @@ def get_user_query():
 def get_user_by_uid(uid):
     user = users.get_user_by_uid(int(uid))
     return json.dumps(user, sort_keys=False)
+
+@app.route('/users/<uid>/groups')
+def get_user_groups(uid):
+    user = users.get_user_by_uid(int(uid))
+    user_name = user["name"]
+    group_list = groups.get_groups_for_user(user_name)
+    return json.dumps(group_list, sort_keys=False)
+
 
 @app.route('/groups', methods=['GET'])
 def get_groups():
