@@ -1,4 +1,4 @@
-###Passwd as a service
+### Passwd as a service
 
 # Installation:
 
@@ -37,7 +37,7 @@ python setup.py install
 
 ## Configure settings 
 The program defaults to the ``passwd`` and ``group`` files on a UNIX system (which are located at ``/etc/passwd`` and ``/etc/groups``).
-If you are not using OSX or Linux, set ``use_test`` in ``config.toml`` to ``false`` and it will use the test files in the ``files`` subdirectory.
+If you are not using OSX or Linux, set ``use_test`` in ``config.toml`` to ``true`` and it will use the test files in the ``files`` subdirectory.
 Change the paths in ``[files.test]`` if you would like to use your own files.
 
 ## Run!
@@ -52,10 +52,12 @@ For example, the following would return all groups.
 
 ```
 http://localhost:8080/groups
-
 ```
 
 ## Supported requests
+###Note: If an invalid uid or gid is passed (i.e. the uid/gid is a string), the API will return a 400 error. A 400 error will also be returned if any of the fields in a query do not match a valid field name.
+
+
 **GET /users**
 
 Return a list of all users on the system, as defined in the passwd file.
@@ -63,3 +65,29 @@ Return a list of all users on the system, as defined in the passwd file.
 **GET
 /users/query[?name=<nq>][&uid=<uq>][&gid=<gq>][&comment=<cq>][&home=<
 hq>][&shell=<sq>]**
+
+Return a list of users matching all of the specified query fields.
+
+**GET /users/<uid>**
+
+Return a single user with <uid>. Return 404 if <uid> is not found.
+
+**GET /users/<uid>/groups**
+
+Return all the groups for a given user.
+
+**GET /groups**
+
+Return a list of all groups on the system, a defined by /etc/group.
+
+
+**GET
+/groups/query[?name=<nq>][&gid=<gq>][&member=<mq1>[&member=<mq2>][&.
+..]]**
+
+Return a list of groups matching all of the specified query fields
+
+**GET /groups/<gid>**
+
+Return a single group with <gid>. Return 404 if <gid> is not found.
+

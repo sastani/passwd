@@ -24,6 +24,8 @@ class ProcessUsers:
             try:
                 with open(self.passwd_path, "r") as file:
                     for line in file:
+                        if line == "" or line.startswith("#"):
+                            continue
                         line = line.strip()
                         fields = line.split(":")
                         #check if line contains all the necessary fields
@@ -97,6 +99,8 @@ class ProcessGroups:
             try:
                 with open(self.group_path, "r") as file:
                     for line in file:
+                        if line == "" or line.startswith("#"):
+                            continue
                         line = line.strip()
                         fields = line.split(":")
                         #check if line contains all the necessary fields

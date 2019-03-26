@@ -1,6 +1,6 @@
 #Config file for passwd as a service
 #Specify paths for passwd and groups files
-use_test = true
+use_test = false
 port = "8080"
 
 [files]
