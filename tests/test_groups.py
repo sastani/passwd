@@ -1,6 +1,5 @@
 import pytest, toml
 from service.extract import ProcessGroups
-from service.exceptions import FormatError
 
 conf_dic = toml.load('config.toml')
 group_file = conf_dic['files']['test']['group']

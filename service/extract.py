@@ -43,8 +43,7 @@ class ProcessUsers:
                         self.uid_to_user[uid] = u
             except FileNotFoundError:
                 print("No such file found.")
-            except ValueError:
-                print("User id and group id fields are invalid.")
+
 
     #returns list of users
     def get_users(self):
@@ -54,7 +53,7 @@ class ProcessUsers:
     #returns user for a given user id
     def get_user_by_uid(self, id):
         self._read_file()
-        return self.uid_to_user[id]
+        return self.uid_to_user.get(id)
 
     #returns user matching specified query
     def get_user_by_query(self, q):
@@ -135,7 +134,7 @@ class ProcessGroups:
     #returns group for a given group id
     def get_group_by_gid(self, id):
         self._read_file()
-        return self.gid_to_group[id]
+        return self.gid_to_group.get(id)
 
     #returns group matching the specified query
     def get_group_by_query(self, q):

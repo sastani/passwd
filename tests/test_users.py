@@ -1,6 +1,5 @@
 import pytest, toml
 from service.extract import ProcessUsers
-from service.exceptions import FormatError
 
 conf_dic = toml.load('config.toml')
 passwd_file = conf_dic['files']['test']['passwd']
