@@ -55,3 +55,11 @@ http://localhost:8080/groups
 
 ```
 
+## Supported requests
+**GET /users**
+
+Return a list of all users on the system, as defined in the passwd file.
+
+**GET
+/users/query[?name=<nq>][&uid=<uq>][&gid=<gq>][&comment=<cq>][&home=<
+hq>][&shell=<sq>]**
