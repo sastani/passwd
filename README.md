@@ -55,7 +55,7 @@ http://localhost:8080/groups
 ```
 
 ## Supported requests
-###Note: If an invalid uid or gid is passed (i.e. the uid/gid is a string), the API will return a 400 error. A 400 error will also be returned if any of the fields in a query do not match a valid field name.
+### Note: If an invalid uid or gid is passed (i.e. the uid/gid is a string), the API will return a 400 error. A 400 error will also be returned if any of the fields in a query do not match a valid field name.
 
 
 **GET /users**
