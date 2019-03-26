@@ -109,7 +109,7 @@ class ProcessGroups:
                         if len(group_list) == 0:
                             group_list = []
                         else:
-                            group_list = [usr for usr in group_list.split(", ")]
+                            group_list = [usr for usr in group_list.split(",")]
                         g = {"name": name, "gid": gid, "members": group_list}
                         #add group (represented as dictionary) to list of groups
                         self.groups.append(g)

@@ -10,7 +10,7 @@ users.set_path(passwd_file)
 
 def test_get_users():
     all_users = users.get_users()
-    assert len(all_users) == 38
+    assert len(all_users) == 37
 
     user_to_test = all_users[5]
     user = "sync:x:5:0:sync:/sbin:/bin/sync"
